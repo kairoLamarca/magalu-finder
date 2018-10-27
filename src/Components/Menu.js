@@ -11,7 +11,7 @@ class Menu extends Component {
                         <div className="dropdown-content">
                             <Link to="/CadastroLojas">Cadastro de lojas</Link>
                             <Link to="/CadastroProdutos">Cadastro de produtos</Link>
-                            <a href="#">Vincular produtos com lojas</a>
+                            <Link to="/VinculoProdutoLoja">Vincular produtos com lojas</Link>
                         </div>
                     </li>
                     <li className="dropdown">
