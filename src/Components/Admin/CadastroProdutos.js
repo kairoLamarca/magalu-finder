@@ -96,6 +96,22 @@ class CadastroProdutos extends Component {
         }
     }
 
+    renderMensagens() {
+        if (this.state.msgErro) {
+            return (
+                <div className="alert">
+                    {this.state.msgErro}
+                </div>
+            )
+        } else if (this.state.msgSucesso) {
+            return (
+                <div className="alert success">
+                    {this.state.msgSucesso}
+                </div>
+            )
+        }
+    }
+
     async delete(id) {
         console.log(id);
 
@@ -119,6 +135,7 @@ class CadastroProdutos extends Component {
             <div>
                 <Menu />
                 <div className="tela">
+                    {this.renderMensagens()}
                     <h2>Cadastro de Produtos</h2>
                     {this.renderCadastro()}
                 </div>
