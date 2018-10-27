@@ -8,10 +8,16 @@ class CadastroLojas extends Component {
         this.state = {
             novaLoja: false
         }
+
+        this.novaLoja = this.novaLoja.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
+    }
+
+    novaLoja() {
+        this.setState({ novaLoja: true });
     }
 
     renderCadastro() {
@@ -80,7 +86,7 @@ class CadastroLojas extends Component {
         else {
             return (
                 <div>
-                    <button class="btn info">Nova Loja</button>
+                    <button onClick={this.novaLoja} class="btn info">Nova Loja</button>
                     <table>
                         <tr>
                             <th>Filial</th>
