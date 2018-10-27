@@ -1,43 +1,100 @@
 import React, { Component } from 'react';
 import Menu from '../Menu';
+import axios from 'axios';
 
 class CadastroLojas extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            novaLoja: false
-        }
+            novaLoja: false,
+            lojasCadastradas: [],
+            filial: '',
+            descricao: '',
+            cep: '',
+            cidade: '',
+            estado: '',
+            endereco: '',
+            bairro: '',
+            numero: ''
+        }    
+    }
 
-        this.novaLoja = this.novaLoja.bind(this);
+    handleChangeFilial(event) {
+        console.log(event.target.value);
+        this.setState({ filial: event.target.value });
     }
 
     componentDidMount() {
+        this.buscarLojas();
+    }
 
+    buscarLojas = async () => {
+        try {
+            const response = await axios.get(`http://localhost:4000/admin/loja/`);
+
+            await this.setState({ lojasCadastradas: response.data });
+        } catch (error) {
+            //console.error(error);
+        }
+    }
+
+    deleteLoja = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:4000/admin/loja/${this.state.filial}`);
+
+            this.setState({ msgErro: '', msgSucesso: response.data.mensagem });
+        } catch (error) {
+            this.setState({ msgErro: 'Não foi possível excluir a loja pois possui produtos vinculados a ela', msgSucesso: '' });
+        }
+    }
+
+    gravarLoja = async () => {
+        try {
+
+        } catch (error) {
+            this.setState({ msgErro: 'Não foi possível cadastrar a loja', msgSucesso: '' });
+        }
     }
 
     novaLoja() {
         this.setState({ novaLoja: true });
     }
 
+    renderMensagens() {
+        if (this.state.msgErro) {
+            return (
+                <div className="alert">
+                    {this.state.msgErro}
+                </div>
+            )
+        } else if (this.state.msgSucesso) {
+            return (
+                <div className="alert success">
+                    {this.state.msgSucesso}
+                </div>
+            )
+        }
+    }
+
     renderCadastro() {
         if (this.state.novaLoja) {
             return (
-                <div class="container">
+                <div className="container">
                     <form action="/action_page.php">
-                        <label for="filial">Filial</label>
-                        <input type="text" id="filial" name="filial" placeholder="Filial" />
+                        <label>Filial</label>
+                        <input type="text" id="filial" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
 
-                        <label for="descricao">Descrição</label>
+                        <label>Descrição</label>
                         <input type="text" id="descricao" name="descricao" placeholder="Descrição" />
 
-                        <label for="cep">CEP</label>
+                        <label>CEP</label>
                         <input type="text" id="cep" name="cep" placeholder="CEP" />
 
-                        <label for="cidade">Cidade</label>
+                        <label>Cidade</label>
                         <input type="text" id="cidade" name="cidade" placeholder="Cidade" />
 
-                        <label for="estado">Estado</label>
+                        <label>Estado</label>
                         <select id="estado" name="estado">
                             <option value="">Selecione</option>
                             <option value="AC">Acre</option>
@@ -69,16 +126,16 @@ class CadastroLojas extends Component {
                             <option value="TO">Tocantins</option>
                         </select>
 
-                        <label for="endereco">Endereço</label>
+                        <label>Endereço</label>
                         <input type="text" id="endereco" name="endereco" placeholder="Endereço" />
 
-                        <label for="bairro">Bairro</label>
+                        <label>Bairro</label>
                         <input type="text" id="bairro" name="bairro" placeholder="Bairro" />
 
-                        <label for="numero">Número</label>
+                        <label>Número</label>
                         <input type="text" id="numero" name="numero" placeholder="Número" />
 
-                        <input type="submit" value="Gravar" />
+                        <button onClick={this.gravarLoja} className="btn success">Gravar</button>
                     </form>
                 </div>
             );
@@ -86,52 +143,76 @@ class CadastroLojas extends Component {
         else {
             return (
                 <div>
-                    <button onClick={this.novaLoja} class="btn info">Nova Loja</button>
-                    <table>
-                        <tr>
-                            <th>Filial</th>
-                            <th>Descrição</th>
-                            <th>CEP</th>
-                            <th>A</th>
-                            <th>E</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td><button class="btnTable info">Alterar</button></td>
-                            <td><button class="btnTable info">Excluir</button></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td><button class="btnTable info">Alterar</button></td>
-                            <td><button class="btnTable info">Excluir</button></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td><button class="btnTable info">Alterar</button></td>
-                            <td><button class="btnTable info">Excluir</button></td>
-                        </tr>
-                    </table>
+                    <button onClick={this.novaLoja.bind(this)} className="btn info">Nova Loja</button>
+                    <ListarLojas items={this.state.lojasCadastradas} _handleDelete={this.delete.bind(this)} _handleUpdate={this.update.bind(this)} />
                 </div>
             );
         }
+    }
+
+    async delete(filial) {
+        console.log(filial);
+
+        await this.setState({ filial: filial });
+
+        await this.deleteLoja();
+
+        await this.buscarLojas();
+    }
+
+    async update(filial) {
+        console.log(filial);
+
+        await this.setState({ filial: filial });
+
+        this.buscarLojas();
     }
 
     render() {
         return (
             <div>
                 <Menu />
-                <div class="tela">
+                <div className="tela">
+                    {this.renderMensagens()}
                     <h2>Cadastro de Lojas</h2>
                     {this.renderCadastro()}
                 </div>
             </div>
         )
+    }
+}
+
+class ListarLojas extends Component {
+
+    _handleDelete(filial) {
+        this.props._handleDelete(filial);
+    }
+
+    _handleUpdate(filial) {
+        this.props._handleUpdate(filial);
+    }
+
+    render() {
+        return (
+            <table>
+                <tr>
+                    <th>Filial</th>
+                    <th>Descrição</th>
+                    <th>CEP</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {this.props.items.map(item => (
+                    <tr key={item.filial}>
+                        <td>{item.filial}</td>
+                        <td>{item.descricao}</td>
+                        <td>{item.cep}</td>
+                        <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.update)}>Alterar</button></td>
+                        <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.filial)}>Excluir</button></td>
+                    </tr>
+                ))}
+            </table>
+        );
     }
 }
 

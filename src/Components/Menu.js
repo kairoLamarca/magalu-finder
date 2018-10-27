@@ -6,17 +6,17 @@ class Menu extends Component {
         return (
             <div>
                 <ul>
-                    <li class="dropdown">
-                        <a href="#" class="dropbtn">Administrativo</a>
-                        <div class="dropdown-content">
+                    <li className="dropdown">
+                        <a href="#" className="dropbtn">Administrativo</a>
+                        <div className="dropdown-content">
                             <Link to="/CadastroLojas">Cadastro de lojas</Link>
                             <a href="#">Cadastro de produtos</a>
                             <a href="#">Vincular produtos com lojas</a>
                         </div>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropbtn">Cliente</a>
-                        <div class="dropdown-content">
+                    <li className="dropdown">
+                        <a href="#" className="dropbtn">Cliente</a>
+                        <div className="dropdown-content">
                             <a href="#">Pesquisar Produto</a>
                         </div>
                     </li>
