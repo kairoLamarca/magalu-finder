@@ -17,7 +17,7 @@ class CadastroLojas extends Component {
             endereco: '',
             bairro: '',
             numero: ''
-        }    
+        }
     }
 
     handleChangeFilial(event) {
@@ -78,7 +78,32 @@ class CadastroLojas extends Component {
 
     gravarLoja = async () => {
         try {
+            const response = await axios.post(`http://localhost:4000/admin/loja/`, {
+                filial: this.state.filial,
+                descricao: this.state.descricao,
+                cep: this.state.cep,
+                cidade: this.state.cidade,
+                estado: this.state.estado,
+                endereco: this.state.endereco,
+                bairro: this.state.bairro,
+                numero: this.state.numero
+            });
 
+            await this.setState({
+                msgErro: '', 
+                msgSucesso: response.data.mensagem, 
+                novaLoja: false,
+                filial: '',
+                descricao: '',
+                cep: '',
+                cidade: '',
+                estado: '',
+                endereco: '',
+                bairro: '',
+                numero: ''
+            });
+
+            await this.buscarLojas();
         } catch (error) {
             this.setState({ msgErro: 'Não foi possível cadastrar a loja', msgSucesso: '' });
         }
@@ -108,62 +133,62 @@ class CadastroLojas extends Component {
         if (this.state.novaLoja) {
             return (
                 <div className="container">
-                    <form action="/action_page.php">
-                        <label>Filial</label>
-                        <input type="text" id="filial" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
+                    {/* <form> */}
+                    <label>Filial</label>
+                    <input type="text" id="filial" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
 
-                        <label>Descrição</label>
-                        <input type="text" id="descricao" value={this.state.descricao} onChange={this.handleChangeDescricao.bind(this)} name="descricao" placeholder="Descrição" />
+                    <label>Descrição</label>
+                    <input type="text" id="descricao" value={this.state.descricao} onChange={this.handleChangeDescricao.bind(this)} name="descricao" placeholder="Descrição" />
 
-                        <label>CEP</label>
-                        <input type="text" id="cep" value={this.state.cep} onChange={this.handleChangeCep.bind(this)} name="cep" placeholder="CEP" />
+                    <label>CEP</label>
+                    <input type="text" id="cep" value={this.state.cep} onChange={this.handleChangeCep.bind(this)} name="cep" placeholder="CEP" />
 
-                        <label>Cidade</label>
-                        <input type="text" id="cidade" value={this.state.cidade} onChange={this.handleChangeCidade.bind(this)} name="cidade" placeholder="Cidade" />
+                    <label>Cidade</label>
+                    <input type="text" id="cidade" value={this.state.cidade} onChange={this.handleChangeCidade.bind(this)} name="cidade" placeholder="Cidade" />
 
-                        <label>Estado</label>
-                        <select id="estado" value={this.state.estado} onChange={this.handleChangeEstado.bind(this)} name="estado">
-                            <option value="">Selecione</option>
-                            <option value="AC">Acre</option>
-                            <option value="AL">Alagoas</option>
-                            <option value="AM">Amazonas</option>
-                            <option value="AP">Amapá</option>
-                            <option value="BA">Bahia</option>
-                            <option value="CE">Ceará</option>
-                            <option value="DF">Distrito Federal</option>
-                            <option value="ES">Espírito Santo</option>
-                            <option value="GO">Goiás</option>
-                            <option value="MA">Maranhão</option>
-                            <option value="MG">Minas Gerais</option>
-                            <option value="MS">Mato Grosso do Sul</option>
-                            <option value="MT">Mato Grosso</option>
-                            <option value="PA">Pará</option>
-                            <option value="PB">Paraíba</option>
-                            <option value="PE">Pernambuco</option>
-                            <option value="PI">Piauí</option>
-                            <option value="PR">Paraná</option>
-                            <option value="RJ">Rio de Janeiro</option>
-                            <option value="RN">Rio Grande do Norte</option>
-                            <option value="RO">Rondônia</option>
-                            <option value="RR">Roraima</option>
-                            <option value="RS">Rio Grande do Sul</option>
-                            <option value="SC">Santa Catarina</option>
-                            <option value="SE">Sergipe</option>
-                            <option value="SP">São Paulo</option>
-                            <option value="TO">Tocantins</option>
-                        </select>
+                    <label>Estado</label>
+                    <select id="estado" value={this.state.estado} onChange={this.handleChangeEstado.bind(this)} name="estado">
+                        <option value="">Selecione</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="PR">Paraná</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
 
-                        <label>Endereço</label>
-                        <input type="text" id="endereco" value={this.state.endereco} onChange={this.handleChangeEndereco.bind(this)} name="endereco" placeholder="Endereço" />
+                    <label>Endereço</label>
+                    <input type="text" id="endereco" value={this.state.endereco} onChange={this.handleChangeEndereco.bind(this)} name="endereco" placeholder="Endereço" />
 
-                        <label>Bairro</label>
-                        <input type="text" id="bairro" value={this.state.bairro} onChange={this.handleChangeBairro.bind(this)} name="bairro" placeholder="Bairro" />
+                    <label>Bairro</label>
+                    <input type="text" id="bairro" value={this.state.bairro} onChange={this.handleChangeBairro.bind(this)} name="bairro" placeholder="Bairro" />
 
-                        <label>Número</label>
-                        <input type="text" id="numero" value={this.state.numero} onChange={this.handleChangeNumero.bind(this)} name="numero" placeholder="Número" />
+                    <label>Número</label>
+                    <input type="text" id="numero" value={this.state.numero} onChange={this.handleChangeNumero.bind(this)} name="numero" placeholder="Número" />
 
-                        <button onClick={this.gravarLoja} className="btn success">Gravar</button>
-                    </form>
+                    <button onClick={this.gravarLoja} className="btn success">Gravar</button>
+                    {/* </form> */}
                 </div>
             );
         }
