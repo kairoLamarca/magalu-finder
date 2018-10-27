@@ -46,6 +46,29 @@ class CadastroProdutos extends Component {
         }
     }
 
+    gravarProduto = async () => {
+        try {
+            const response = await axios.post(`http://localhost:4000/admin/produto/`, {
+                codigo: this.state.codigo,
+                descricao: this.state.descricao,
+                valor: this.state.valor
+            });
+
+            await this.setState({
+                msgErro: '', 
+                msgSucesso: response.data.mensagem, 
+                novoProduto: false,
+                codigo: '',
+                descricao: '',
+                valor: ''
+            });
+
+            await this.buscarProdutos();
+        } catch (error) {
+            this.setState({ msgErro: 'Não foi possível cadastrar o produto', msgSucesso: '' });
+        }
+    }
+
     renderCadastro() {
         if (this.state.novoProduto) {
             return (
@@ -59,7 +82,7 @@ class CadastroProdutos extends Component {
                     <label>Valor</label>
                     <input type="text" id="valor" value={this.state.valor} onChange={this.handleChangeValor.bind(this)} name="valor" placeholder="Valor" />
 
-                    <button onClick={this.gravarLoja} className="btn success">Gravar</button>
+                    <button onClick={this.gravarProduto} className="btn success">Gravar</button>
                 </div>
             );
         }
