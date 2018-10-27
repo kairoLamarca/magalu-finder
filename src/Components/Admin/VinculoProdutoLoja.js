@@ -8,8 +8,9 @@ class VinculoProdutoLoja extends Component {
 
         this.state = {
             pesquisarProduto: true,
-            produtosCadastrados: [],
-            codigo: ''
+            produtosLojasCadastrados: [],
+            codigo: '',
+            id: ''
         }
     }
 
@@ -17,30 +18,67 @@ class VinculoProdutoLoja extends Component {
         this.setState({ codigo: event.target.value });
     }
 
+    componentDidMount() {
+        this.buscarProdutosLojas();
+    }
+
+    buscarProdutosLojas = async () => {
+        try {
+            const response = await axios.get(`http://localhost:4000/admin/produtoloja/`);
+
+            await this.setState({ produtosLojasCadastrados: response.data });
+        } catch (error) {
+            //console.error(error);
+        }
+    }
+
     pesquisarProdutoPorCodigo = async () => {
         try {
-            if (this.state.codigo) {
-                const response = await axios.get(`http://localhost:4000/admin/produtoloja/${this.state.codigo}`);
-                
-                console.log(response);
-            }
-            else{
-                this.setState({ msgErro: 'Preencha um código', msgSucesso: '' });
-            }
-            //await this.setState({ produtosCadastrados: response.data });
+            //if (this.state.codigo) {
+            const response = await axios.get(`http://localhost:4000/admin/produtoloja/${this.state.codigo}`);
+
+            console.log(response);
+            await this.setState({ produtosLojasCadastrados: response.data });
+            // }
+            // else{
+            //     this.setState({ msgErro: 'Preencha um código', msgSucesso: '' });
+            // }            
         } catch (error) {
             this.setState({ msgErro: 'Nenhum produto foi encontrado', msgSucesso: '' });
         }
     }
 
+    async delete(filial) {
+        console.log(filial);
+
+        await this.setState({ filial: filial });
+
+        //await this.deleteLoja();
+
+        await this.buscarProdutosLojas();
+    }
+
+    async update(filial) {
+        console.log(filial);
+
+        //await this.setState({ filial: filial });
+
+        this.buscarProdutosLojas();
+    }
+
     renderCadastro() {
         if (this.state.pesquisarProduto) {
             return (
-                <div className="container">
-                    <label>Código do produto</label>
-                    <input type="text" id="codigo" value={this.state.codigo} onChange={this.handleChangeCodigo.bind(this)} name="codigo" placeholder="Código" />
+                <div >
+                    <div className="container">
+                        <label>Código do produto</label>
+                        <input type="text" id="codigo" value={this.state.codigo} onChange={this.handleChangeCodigo.bind(this)} name="codigo" placeholder="Código" />
 
-                    <button onClick={this.pesquisarProdutoPorCodigo} className="btn info">Pesquisar produto</button>
+                        <button onClick={this.pesquisarProdutoPorCodigo} className="btn info">Pesquisar produto</button>
+                    </div>
+                    <div>
+                        <ListarProdutosLojas items={this.state.produtosLojasCadastrados} _handleDelete={this.delete.bind(this)} _handleUpdate={this.update.bind(this)} />
+                    </div>
                 </div>
             );
         }
@@ -74,12 +112,48 @@ class VinculoProdutoLoja extends Component {
             <div>
                 <Menu />
                 <div className="tela">
-                {this.renderMensagens()}
+                    {this.renderMensagens()}
                     <h2>Vincular produtos com lojas</h2>
                     {this.renderCadastro()}
                 </div>
             </div>
         )
+    }
+}
+
+class ListarProdutosLojas extends Component {
+
+    _handleDelete(filial) {
+        this.props._handleDelete(filial);
+    }
+
+    _handleUpdate(filial) {
+        this.props._handleUpdate(filial);
+    }
+
+    render() {
+        return (
+            <table>
+                <tr>
+                    <th>Filial</th>
+                    <th>Descrição</th>
+                    <th>Código do Produto</th>
+                    <th>Produto</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {this.props.items.map(item => (
+                    <tr key={item.id}>
+                        <td>{item.filial}</td>
+                        <td>{item.loja}</td>
+                        <td>{item.codigo_produto}</td>
+                        <td>{item.produto}</td>
+                        <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.id)}>Alterar</button></td>
+                        <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.id)}>Excluir</button></td>
+                    </tr>
+                ))}
+            </table>
+        );
     }
 }
 
