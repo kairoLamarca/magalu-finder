@@ -69,6 +69,16 @@ class CadastroProdutos extends Component {
         }
     }
 
+    deleteProduto = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:4000/admin/produto/${this.state.id}`);
+
+            this.setState({ msgErro: '', msgSucesso: response.data.mensagem });
+        } catch (error) {
+            this.setState({ msgErro: 'Não foi possível excluir a loja pois possui produtos vinculados a ela', msgSucesso: '' });
+        }
+    }
+
     renderCadastro() {
         if (this.state.novoProduto) {
             return (
@@ -117,7 +127,7 @@ class CadastroProdutos extends Component {
 
         await this.setState({ id: id });
 
-        //await this.deleteProduto();
+        await this.deleteProduto();
 
         await this.buscarProdutos();
     }
