@@ -32,6 +32,20 @@ class CadastroProdutos extends Component {
         this.setState({ novoProduto: true });
     }
 
+    componentDidMount() {
+        this.buscarProdutos();
+    }
+
+    buscarProdutos = async () => {
+        try {
+            const response = await axios.get(`http://localhost:4000/admin/produto/`);
+
+            await this.setState({ produtosCadastrados: response.data });
+        } catch (error) {
+            //console.error(error);
+        }
+    }
+
     renderCadastro() {
         if (this.state.novoProduto) {
             return (
@@ -53,9 +67,28 @@ class CadastroProdutos extends Component {
             return (
                 <div>
                     <button onClick={this.novoProduto.bind(this)} className="btn info">Novo Produto</button>
+                    <ListarProdutos items={this.state.produtosCadastrados} _handleDelete={this.delete.bind(this)} _handleUpdate={this.update.bind(this)} />
                 </div>
             );
         }
+    }
+
+    async delete(id) {
+        console.log(id);
+
+        await this.setState({ id: id });
+
+        //await this.deleteProduto();
+
+        await this.buscarProdutos();
+    }
+
+    async update(id) {
+        console.log(id);
+
+        await this.setState({ id: id });
+
+        this.buscarProdutos();
     }
 
     render() {
@@ -68,6 +101,40 @@ class CadastroProdutos extends Component {
                 </div>
             </div>
         )
+    }
+}
+
+class ListarProdutos extends Component {
+
+    _handleDelete(id) {
+        this.props._handleDelete(id);
+    }
+
+    _handleUpdate(id) {
+        this.props._handleUpdate(id);
+    }
+
+    render() {
+        return (
+            <table>
+                <tr>
+                    <th>Código</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {this.props.items.map(item => (
+                    <tr key={item.id}>
+                        <td>{item.codigo}</td>
+                        <td>{item.valor}</td>
+                        <td>{item.descricao}</td>
+                        <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.id)}>Alterar</button></td>
+                        <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.id)}>Excluir</button></td>
+                    </tr>
+                ))}
+            </table>
+        );
     }
 }
 

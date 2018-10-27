@@ -259,7 +259,7 @@ class ListarLojas extends Component {
                         <td>{item.filial}</td>
                         <td>{item.descricao}</td>
                         <td>{item.cep}</td>
-                        <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.update)}>Alterar</button></td>
+                        <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.filial)}>Alterar</button></td>
                         <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.filial)}>Excluir</button></td>
                     </tr>
                 ))}
