@@ -4,6 +4,7 @@ import './index.css';
 import './public/magalu-finder.css';
 import App from './App';
 import CadastroLojas from './Components/Admin/CadastroLojas';
+import CadastroProdutos from './Components/Admin/CadastroProdutos';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
@@ -12,6 +13,7 @@ ReactDOM.render(
         <Switch>
             <Route path="/" exact={true} component={App} />
             <Route path="/CadastroLojas" exact={true} component={CadastroLojas} />
+            <Route path="/CadastroProdutos" exact={true} component={CadastroProdutos} />
         </Switch>
     </BrowserRouter>, document.getElementById('root'));
 

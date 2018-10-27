@@ -10,7 +10,7 @@ class Menu extends Component {
                         <a href="#" className="dropbtn">Administrativo</a>
                         <div className="dropdown-content">
                             <Link to="/CadastroLojas">Cadastro de lojas</Link>
-                            <a href="#">Cadastro de produtos</a>
+                            <Link to="/CadastroProdutos">Cadastro de produtos</Link>
                             <a href="#">Vincular produtos com lojas</a>
                         </div>
                     </li>
