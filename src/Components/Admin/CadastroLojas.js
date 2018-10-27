@@ -21,8 +21,35 @@ class CadastroLojas extends Component {
     }
 
     handleChangeFilial(event) {
-        console.log(event.target.value);
         this.setState({ filial: event.target.value });
+    }
+
+    handleChangeDescricao(event) {
+        this.setState({ descricao: event.target.value });
+    }
+
+    handleChangeCep(event) {
+        this.setState({ cep: event.target.value });
+    }
+
+    handleChangeCidade(event) {
+        this.setState({ cidade: event.target.value });
+    }
+
+    handleChangeEstado(event) {
+        this.setState({ estado: event.target.value });
+    }
+
+    handleChangeEndereco(event) {
+        this.setState({ endereco: event.target.value });
+    }
+
+    handleChangeBairro(event) {
+        this.setState({ bairro: event.target.value });
+    }
+
+    handleChangeNumero(event) {
+        this.setState({ numero: event.target.value });
     }
 
     componentDidMount() {
@@ -86,16 +113,16 @@ class CadastroLojas extends Component {
                         <input type="text" id="filial" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
 
                         <label>Descrição</label>
-                        <input type="text" id="descricao" name="descricao" placeholder="Descrição" />
+                        <input type="text" id="descricao" value={this.state.descricao} onChange={this.handleChangeDescricao.bind(this)} name="descricao" placeholder="Descrição" />
 
                         <label>CEP</label>
-                        <input type="text" id="cep" name="cep" placeholder="CEP" />
+                        <input type="text" id="cep" value={this.state.cep} onChange={this.handleChangeCep.bind(this)} name="cep" placeholder="CEP" />
 
                         <label>Cidade</label>
-                        <input type="text" id="cidade" name="cidade" placeholder="Cidade" />
+                        <input type="text" id="cidade" value={this.state.cidade} onChange={this.handleChangeCidade.bind(this)} name="cidade" placeholder="Cidade" />
 
                         <label>Estado</label>
-                        <select id="estado" name="estado">
+                        <select id="estado" value={this.state.estado} onChange={this.handleChangeEstado.bind(this)} name="estado">
                             <option value="">Selecione</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
@@ -127,13 +154,13 @@ class CadastroLojas extends Component {
                         </select>
 
                         <label>Endereço</label>
-                        <input type="text" id="endereco" name="endereco" placeholder="Endereço" />
+                        <input type="text" id="endereco" value={this.state.endereco} onChange={this.handleChangeEndereco.bind(this)} name="endereco" placeholder="Endereço" />
 
                         <label>Bairro</label>
-                        <input type="text" id="bairro" name="bairro" placeholder="Bairro" />
+                        <input type="text" id="bairro" value={this.state.bairro} onChange={this.handleChangeBairro.bind(this)} name="bairro" placeholder="Bairro" />
 
                         <label>Número</label>
-                        <input type="text" id="numero" name="numero" placeholder="Número" />
+                        <input type="text" id="numero" value={this.state.numero} onChange={this.handleChangeNumero.bind(this)} name="numero" placeholder="Número" />
 
                         <button onClick={this.gravarLoja} className="btn success">Gravar</button>
                     </form>
