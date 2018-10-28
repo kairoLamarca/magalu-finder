@@ -7,7 +7,7 @@ class VinculoProdutoLoja extends Component {
         super(props);
 
         this.state = {
-            pesquisarProduto: true,
+            vincularProduto: false,
             produtosLojasCadastrados: [],
             codigo: '',
             id: ''
@@ -34,15 +34,14 @@ class VinculoProdutoLoja extends Component {
 
     pesquisarProdutoPorCodigo = async () => {
         try {
-            //if (this.state.codigo) {
-            const response = await axios.get(`http://localhost:4000/admin/produtoloja/${this.state.codigo}`);
+            if (this.state.codigo) {
+                const response = await axios.get(`http://localhost:4000/admin/produtoloja/${this.state.codigo}`);
 
-            console.log(response);
-            await this.setState({ produtosLojasCadastrados: response.data });
-            // }
-            // else{
-            //     this.setState({ msgErro: 'Preencha um código', msgSucesso: '' });
-            // }            
+                await this.setState({ produtosLojasCadastrados: response.data, vincularProduto: true });
+            }
+            else {
+                this.setState({ msgErro: 'Preencha um código', msgSucesso: '' });
+            }
         } catch (error) {
             this.setState({ msgErro: 'Nenhum produto foi encontrado', msgSucesso: '' });
         }
@@ -66,29 +65,36 @@ class VinculoProdutoLoja extends Component {
         this.buscarProdutosLojas();
     }
 
-    renderCadastro() {
-        if (this.state.pesquisarProduto) {
-            return (
-                <div >
-                    <div className="container">
-                        <label>Código do produto</label>
-                        <input type="text" id="codigo" value={this.state.codigo} onChange={this.handleChangeCodigo.bind(this)} name="codigo" placeholder="Código" />
+    renderPesquisa() {
+        return (
+            <div >
+                <div className="container">
+                    <label>Código do produto</label>
+                    <input type="text" id="codigo" value={this.state.codigo} onChange={this.handleChangeCodigo.bind(this)} name="codigo" placeholder="Código" />
 
-                        <button onClick={this.pesquisarProdutoPorCodigo} className="btn info">Pesquisar produto</button>
-                    </div>
-                    <div>
-                        <ListarProdutosLojas items={this.state.produtosLojasCadastrados} _handleDelete={this.delete.bind(this)} _handleUpdate={this.update.bind(this)} />
-                    </div>
+                    <button onClick={this.pesquisarProdutoPorCodigo} className="btn info">Pesquisar produto</button>
                 </div>
-            );
-        }
-        else {
+
+            </div>
+        );
+    }
+
+    renderVinculo() {
+        if (this.state.vincularProduto) {
             return (
                 <div>
                     Vincular Produto
                 </div>
-            );
+            )
         }
+    }
+
+    renderListagem() {
+        return (
+            <div>
+                <ListarProdutosLojas items={this.state.produtosLojasCadastrados} _handleDelete={this.delete.bind(this)} _handleUpdate={this.update.bind(this)} />
+            </div>
+        )
     }
 
     renderMensagens() {
@@ -114,7 +120,9 @@ class VinculoProdutoLoja extends Component {
                 <div className="tela">
                     {this.renderMensagens()}
                     <h2>Vincular produtos com lojas</h2>
-                    {this.renderCadastro()}
+                    {this.renderPesquisa()}
+                    {this.renderVinculo()}
+                    {this.renderListagem()}
                 </div>
             </div>
         )
@@ -135,19 +143,19 @@ class ListarProdutosLojas extends Component {
         return (
             <table>
                 <tr>
-                    <th>Filial</th>
-                    <th>Descrição</th>
                     <th>Código do Produto</th>
                     <th>Produto</th>
+                    <th>Filial</th>
+                    <th>Descrição</th>
                     <th></th>
                     <th></th>
                 </tr>
                 {this.props.items.map(item => (
                     <tr key={item.id}>
-                        <td>{item.filial}</td>
-                        <td>{item.loja}</td>
                         <td>{item.codigo_produto}</td>
                         <td>{item.produto}</td>
+                        <td>{item.filial}</td>
+                        <td>{item.loja}</td>
                         <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.id)}>Alterar</button></td>
                         <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.id)}>Excluir</button></td>
                     </tr>
