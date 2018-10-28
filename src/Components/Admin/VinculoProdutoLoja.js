@@ -9,17 +9,27 @@ class VinculoProdutoLoja extends Component {
         this.state = {
             vincularProduto: false,
             produtosLojasCadastrados: [],
+            LojasCadastradas: [],
+            codigoPesquisa: '',
+            id: '',
             codigo: '',
-            id: ''
+            descricao: '',
+            valor: '',
+            filial: ''
         }
     }
 
-    handleChangeCodigo(event) {
-        this.setState({ codigo: event.target.value });
+    handleChangeCodigoPesquisa(event) {
+        this.setState({ codigoPesquisa: event.target.value });
+    }
+
+    handleChangeSelectLojas(event){
+        this.setState({ filial: event.target.value });
     }
 
     componentDidMount() {
         this.buscarProdutosLojas();
+        this.buscarLojas();
     }
 
     buscarProdutosLojas = async () => {
@@ -32,12 +42,48 @@ class VinculoProdutoLoja extends Component {
         }
     }
 
+    buscarLojas = async () => {
+        try {
+            const response = await axios.get(`http://localhost:4000/admin/loja/`);
+
+            await this.setState({ LojasCadastradas: response.data });
+        } catch (error) {
+            //console.error(error);
+        }
+    }
+
+    pesquisarProdutoLojaPorCodigo = async () => {
+        try {
+            if (this.state.codigoPesquisa) {
+                const response = await axios.get(`http://localhost:4000/admin/produtoloja/${this.state.codigoPesquisa}`);
+
+                await this.setState({
+                    produtosLojasCadastrados: response.data
+                });
+
+                await this.pesquisarProdutoPorCodigo();
+
+            }
+            else {
+                this.setState({ msgErro: 'Preencha um código', msgSucesso: '', vincularProduto: false });
+            }
+        } catch (error) {
+            this.setState({ msgErro: 'Nenhum produto foi encontrado', msgSucesso: '', vincularProduto: false });
+        }
+    }
+
     pesquisarProdutoPorCodigo = async () => {
         try {
-            if (this.state.codigo) {
-                const response = await axios.get(`http://localhost:4000/admin/produtoloja/${this.state.codigo}`);
+            if (this.state.codigoPesquisa) {
+                const response = await axios.get(`http://localhost:4000/admin/produto/${this.state.codigoPesquisa}`);
 
-                await this.setState({ produtosLojasCadastrados: response.data, vincularProduto: true });
+                await this.setState({
+                    vincularProduto: true,
+                    codigo: response.data[0].codigo,
+                    id: response.data[0].id,
+                    descricao: response.data[0].descricao,
+                    valor: response.data[0].valor
+                });
             }
             else {
                 this.setState({ msgErro: 'Preencha um código', msgSucesso: '', vincularProduto: false });
@@ -55,18 +101,15 @@ class VinculoProdutoLoja extends Component {
         //await this.deleteLoja();
 
         await this.buscarProdutosLojas();
-    }    
+    }
 
     renderPesquisa() {
         return (
-            <div >
-                <div className="container">
-                    <label>Código do produto</label>
-                    <input type="text" id="codigo" value={this.state.codigo} onChange={this.handleChangeCodigo.bind(this)} name="codigo" placeholder="Código" />
+            <div className="container">
+                <label>Código do produto</label>
+                <input type="text" id="codigo" value={this.state.codigoPesquisa} onChange={this.handleChangeCodigoPesquisa.bind(this)} name="codigo" placeholder="Código" />
 
-                    <button onClick={this.pesquisarProdutoPorCodigo} className="btn info">Pesquisar produto</button>
-                </div>
-
+                <button onClick={this.pesquisarProdutoLojaPorCodigo} className="btn info">Pesquisar produto</button>
             </div>
         );
     }
@@ -74,11 +117,31 @@ class VinculoProdutoLoja extends Component {
     renderVinculo() {
         if (this.state.vincularProduto) {
             return (
-                <div>
-                    Vincular Produto
+                <div className="container">
+                    <h2>Vincular Produto</h2>
+                    <p>
+                        <strong>Código: </strong> {this.state.codigo}
+                    </p>
+                    <p>
+                        <strong>Descrição: </strong> {this.state.descricao}
+                    </p>
+                    <p>
+                        <strong>Valor: </strong> {this.state.valor}
+                    </p>
+                    <select onChange={this.handleChangeSelectLojas.bind(this)} value={this.state.filial}>
+                        <option value="">Selecione</option>
+                        {this.state.LojasCadastradas.map(item => (
+                            <option key={item.filial} value={item.filial}>{item.descricao}</option>
+                        ))}
+                    </select>
+                    <button onClick={this.vincularProduto} className="btn info">Vincular produto</button>
                 </div>
             )
         }
+    }
+
+    vincularProduto() {
+
     }
 
     renderListagem() {
