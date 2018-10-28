@@ -34,9 +34,14 @@ class PesquisaProduto extends Component {
 
                 await this.setState({ produtosEncontrados: response.data });
             }
+            else if (this.state.descricao && this.state.cep) {
+                response = await axios.get(`http://localhost:4000/cliente/produtoloja/descricao/cep/${this.state.descricao}/${this.state.cep}`);
+
+                await this.setState({ produtosEncontrados: response.data });
+            }
             else {
                 response = await axios.get(`http://localhost:4000/cliente/produtoloja/`);
-                
+
                 await this.setState({ produtosEncontrados: response.data });
             }
         } catch (error) {
@@ -91,7 +96,7 @@ class ListarProdutosLojas extends Component {
                     <tr>
                         <th>Código do Produto</th>
                         <th>Produto</th>
-                        <th>Distância</th>                        
+                        <th>Distância</th>
                         <th>Descrição</th>
                         <th>CEP</th>
                     </tr>
