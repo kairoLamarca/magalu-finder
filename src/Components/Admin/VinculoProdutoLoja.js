@@ -40,10 +40,10 @@ class VinculoProdutoLoja extends Component {
                 await this.setState({ produtosLojasCadastrados: response.data, vincularProduto: true });
             }
             else {
-                this.setState({ msgErro: 'Preencha um código', msgSucesso: '' });
+                this.setState({ msgErro: 'Preencha um código', msgSucesso: '', vincularProduto: false });
             }
         } catch (error) {
-            this.setState({ msgErro: 'Nenhum produto foi encontrado', msgSucesso: '' });
+            this.setState({ msgErro: 'Nenhum produto foi encontrado', msgSucesso: '', vincularProduto: false });
         }
     }
 
@@ -55,15 +55,7 @@ class VinculoProdutoLoja extends Component {
         //await this.deleteLoja();
 
         await this.buscarProdutosLojas();
-    }
-
-    async update(filial) {
-        console.log(filial);
-
-        //await this.setState({ filial: filial });
-
-        this.buscarProdutosLojas();
-    }
+    }    
 
     renderPesquisa() {
         return (
@@ -92,7 +84,7 @@ class VinculoProdutoLoja extends Component {
     renderListagem() {
         return (
             <div>
-                <ListarProdutosLojas items={this.state.produtosLojasCadastrados} _handleDelete={this.delete.bind(this)} _handleUpdate={this.update.bind(this)} />
+                <ListarProdutosLojas items={this.state.produtosLojasCadastrados} _handleDelete={this.delete.bind(this)} />
             </div>
         )
     }
@@ -135,10 +127,6 @@ class ListarProdutosLojas extends Component {
         this.props._handleDelete(filial);
     }
 
-    _handleUpdate(filial) {
-        this.props._handleUpdate(filial);
-    }
-
     render() {
         return (
             <table>
@@ -148,7 +136,6 @@ class ListarProdutosLojas extends Component {
                     <th>Filial</th>
                     <th>Descrição</th>
                     <th></th>
-                    <th></th>
                 </tr>
                 {this.props.items.map(item => (
                     <tr key={item.id}>
@@ -156,7 +143,6 @@ class ListarProdutosLojas extends Component {
                         <td>{item.produto}</td>
                         <td>{item.filial}</td>
                         <td>{item.loja}</td>
-                        <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.id)}>Alterar</button></td>
                         <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.id)}>Excluir</button></td>
                     </tr>
                 ))}
