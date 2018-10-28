@@ -39,7 +39,7 @@ class VinculoProdutoLoja extends Component {
 
             await this.setState({ produtosLojasCadastrados: response.data });
         } catch (error) {
-            //console.error(error);
+            await this.setState({ produtosLojasCadastrados: []});
         }
     }
 
@@ -96,8 +96,6 @@ class VinculoProdutoLoja extends Component {
     }
 
     async delete(id_vinculo) {
-        console.log(id_vinculo);
-
         await this.setState({ id_vinculo: id_vinculo });
 
         await this.deleteVinculo();
@@ -133,8 +131,7 @@ class VinculoProdutoLoja extends Component {
 
                 this.buscarProdutosLojas();
             }
-            catch (error) {
-                console.log(error)
+            catch (error) {                
                 this.setState({ msgErro: 'Produto já vinculado com essa loja', msgSucesso: '' });
             }
         }
