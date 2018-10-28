@@ -10,7 +10,9 @@ class PesquisaProduto extends Component {
             codigo: '',
             descricao: '',
             cep: '',
-            produtosEncontrados: []
+            produtosEncontrados: [],
+            msgErro: '',
+            msgSucesso: ''
         }
     }
 
@@ -32,20 +34,20 @@ class PesquisaProduto extends Component {
             if (this.state.codigo && this.state.cep) {
                 response = await axios.get(`http://localhost:4000/cliente/produtoloja/codigo/cep/${this.state.codigo}/${this.state.cep}`);
 
-                await this.setState({ produtosEncontrados: response.data });
+                await this.setState({ produtosEncontrados: response.data, msgErro: '' });
             }
             else if (this.state.descricao && this.state.cep) {
                 response = await axios.get(`http://localhost:4000/cliente/produtoloja/descricao/cep/${this.state.descricao}/${this.state.cep}`);
 
-                await this.setState({ produtosEncontrados: response.data });
+                await this.setState({ produtosEncontrados: response.data, msgErro: ''});
             }
             else {
                 response = await axios.get(`http://localhost:4000/cliente/produtoloja/`);
 
-                await this.setState({ produtosEncontrados: response.data });
+                await this.setState({ produtosEncontrados: response.data, msgErro: '' });
             }
         } catch (error) {
-            await this.setState({ produtosEncontrados: [] });
+            await this.setState({ produtosEncontrados: [], msgErro: 'Nenhum produto foi encontrado' });
         }
     }
 
@@ -74,11 +76,28 @@ class PesquisaProduto extends Component {
         )
     }
 
+    renderMensagens() {
+        if (this.state.msgErro) {
+            return (
+                <div className="alert">
+                    {this.state.msgErro}
+                </div>
+            )
+        } else if (this.state.msgSucesso) {
+            return (
+                <div className="alert success">
+                    {this.state.msgSucesso}
+                </div>
+            )
+        }
+    }
+
     render() {
         return (
             <div>
                 <Menu />
                 <div className="tela">
+                    {this.renderMensagens()}
                     <h2>Pesquisar Produto</h2>
                     {this.renderPesquisa()}
                     {this.renderListagem()}
