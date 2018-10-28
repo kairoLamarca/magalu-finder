@@ -90,8 +90,8 @@ class CadastroLojas extends Component {
             });
 
             await this.setState({
-                msgErro: '', 
-                msgSucesso: response.data.mensagem, 
+                msgErro: '',
+                msgSucesso: response.data.mensagem,
                 novaLoja: false,
                 filial: '',
                 descricao: '',
@@ -247,22 +247,26 @@ class ListarLojas extends Component {
     render() {
         return (
             <table>
-                <tr>
-                    <th>Filial</th>
-                    <th>Descrição</th>
-                    <th>CEP</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                {this.props.items.map(item => (
-                    <tr key={item.filial}>
-                        <td>{item.filial}</td>
-                        <td>{item.descricao}</td>
-                        <td>{item.cep}</td>
-                        <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.filial)}>Alterar</button></td>
-                        <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.filial)}>Excluir</button></td>
+                <thead>
+                    <tr>
+                        <th>Filial</th>
+                        <th>Descrição</th>
+                        <th>CEP</th>
+                        <th></th>
+                        <th></th>
                     </tr>
-                ))}
+                </thead>
+                <tbody>
+                    {this.props.items.map(item => (
+                        <tr key={item.filial}>
+                            <td>{item.filial}</td>
+                            <td>{item.descricao}</td>
+                            <td>{item.cep}</td>
+                            <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.filial)}>Alterar</button></td>
+                            <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.filial)}>Excluir</button></td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         );
     }

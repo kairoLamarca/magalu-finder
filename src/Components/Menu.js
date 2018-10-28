@@ -7,7 +7,7 @@ class Menu extends Component {
             <div>
                 <ul>
                     <li className="dropdown">
-                        <a href="#" className="dropbtn">Administrativo</a>
+                        <Link className="dropbtn" to="/">Administrativo</Link>
                         <div className="dropdown-content">
                             <Link to="/CadastroLojas">Cadastro de lojas</Link>
                             <Link to="/CadastroProdutos">Cadastro de produtos</Link>
@@ -15,7 +15,7 @@ class Menu extends Component {
                         </div>
                     </li>
                     <li className="dropdown">
-                        <a href="#" className="dropbtn">Cliente</a>
+                        <Link className="dropbtn" to="/">Cliente</Link>
                         <div className="dropdown-content">
                             <a href="#">Pesquisar Produto</a>
                         </div>

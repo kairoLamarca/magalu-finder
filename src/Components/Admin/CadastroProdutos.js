@@ -55,8 +55,8 @@ class CadastroProdutos extends Component {
             });
 
             await this.setState({
-                msgErro: '', 
-                msgSucesso: response.data.mensagem, 
+                msgErro: '',
+                msgSucesso: response.data.mensagem,
                 novoProduto: false,
                 codigo: '',
                 descricao: '',
@@ -167,22 +167,26 @@ class ListarProdutos extends Component {
     render() {
         return (
             <table>
-                <tr>
-                    <th>Código</th>
-                    <th>Descrição</th>
-                    <th>Valor</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                {this.props.items.map(item => (
-                    <tr key={item.id}>
-                        <td>{item.codigo}</td>
-                        <td>{item.valor}</td>
-                        <td>{item.descricao}</td>
-                        <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.id)}>Alterar</button></td>
-                        <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.id)}>Excluir</button></td>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th></th>
+                        <th></th>
                     </tr>
-                ))}
+                </thead>
+                <tbody>
+                    {this.props.items.map(item => (
+                        <tr key={item.id}>
+                            <td>{item.codigo}</td>
+                            <td>{item.valor}</td>
+                            <td>{item.descricao}</td>
+                            <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.id)}>Alterar</button></td>
+                            <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.id)}>Excluir</button></td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         );
     }

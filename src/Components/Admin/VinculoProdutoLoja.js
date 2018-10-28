@@ -117,7 +117,7 @@ class VinculoProdutoLoja extends Component {
 
     vincularProduto = async () => {
         if (this.state.filial) {
-            try {                
+            try {
                 const response = await axios.post(`http://localhost:4000/admin/produtoloja/`, {
                     id_produto: this.state.id_produto,
                     filial: this.state.filial
@@ -230,22 +230,26 @@ class ListarProdutosLojas extends Component {
     render() {
         return (
             <table>
-                <tr>
-                    <th>Código do Produto</th>
-                    <th>Produto</th>
-                    <th>Filial</th>
-                    <th>Descrição</th>
-                    <th></th>
-                </tr>
-                {this.props.items.map(item => (
-                    <tr key={item.id}>
-                        <td>{item.codigo_produto}</td>
-                        <td>{item.produto}</td>
-                        <td>{item.filial}</td>
-                        <td>{item.loja}</td>
-                        <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.id)}>Excluir</button></td>
+                <thead>
+                    <tr>
+                        <th>Código do Produto</th>
+                        <th>Produto</th>
+                        <th>Filial</th>
+                        <th>Descrição</th>
+                        <th></th>
                     </tr>
-                ))}
+                </thead>
+                <tbody>
+                    {this.props.items.map(item => (
+                        <tr key={item.id}>
+                            <td>{item.codigo_produto}</td>
+                            <td>{item.produto}</td>
+                            <td>{item.filial}</td>
+                            <td>{item.loja}</td>
+                            <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.id)}>Excluir</button></td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         );
     }
