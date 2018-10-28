@@ -62,7 +62,7 @@ class CadastroLojas extends Component {
 
             await this.setState({ lojasCadastradas: response.data });
         } catch (error) {
-            //console.error(error);
+            await this.setState({ lojasCadastradas: [] });
         }
     }
 
@@ -202,9 +202,7 @@ class CadastroLojas extends Component {
         }
     }
 
-    async delete(filial) {
-        console.log(filial);
-
+    async delete(filial) {    
         await this.setState({ filial: filial });
 
         await this.deleteLoja();
@@ -213,8 +211,6 @@ class CadastroLojas extends Component {
     }
 
     async update(filial) {
-        console.log(filial);
-
         await this.setState({ filial: filial });
 
         this.buscarLojas();
