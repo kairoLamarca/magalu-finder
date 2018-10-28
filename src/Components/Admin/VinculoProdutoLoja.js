@@ -66,7 +66,7 @@ class VinculoProdutoLoja extends Component {
                 this.setState({ msgErro: 'Preencha um código', msgSucesso: '', vincularProduto: false });
             }
         } catch (error) {
-            this.setState({ msgErro: '', msgSucesso: '', vincularProduto: false });
+            this.setState({ msgErro: '', msgSucesso: '' });
         }
     }
 

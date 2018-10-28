@@ -28,11 +28,21 @@ class PesquisaProduto extends Component {
 
     pesquisarProduto = async () => {
         try {
-            const response = await axios.get(`http://localhost:4000/cliente/produtoloja/`);
+            let response = [];
+            if (this.state.codigo && this.state.cep) {
+                response = await axios.get(`http://localhost:4000/cliente/produtoloja/codigo/cep/${this.state.codigo}/${this.state.cep}`);
 
-            await this.setState({ produtosEncontrados: response.data });
+                await this.setState({ produtosEncontrados: response.data });
+            }
+            else {
+                response = await axios.get(`http://localhost:4000/cliente/produtoloja/`);
+
+                await this.setState({ produtosEncontrados: response.data });
+            }
+
+            
         } catch (error) {
-            //console.error(error);
+            await this.setState({ produtosEncontrados: [] });
         }
     }
 
@@ -83,6 +93,7 @@ class ListarProdutosLojas extends Component {
                     <tr>
                         <th>Código do Produto</th>
                         <th>Produto</th>
+                        <th>Distância</th>
                         <th>CEP</th>
                         <th>Descrição</th>
                     </tr>
@@ -92,8 +103,9 @@ class ListarProdutosLojas extends Component {
                         <tr key={item.codigo_produto + item.loja}>
                             <td>{item.codigo_produto}</td>
                             <td>{item.produto}</td>
+                            <td>{item.distancia}</td>
                             <td>{item.loja}</td>
-                            <td>{item.cep}</td>                            
+                            <td>{item.cep}</td>
                         </tr>
                     ))}
                 </tbody>
