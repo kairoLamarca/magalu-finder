@@ -42,7 +42,7 @@ class CadastroProdutos extends Component {
 
             await this.setState({ produtosCadastrados: response.data });
         } catch (error) {
-            //console.error(error);
+            await this.setState({ produtosCadastrados: []});
         }
     }
 
@@ -123,8 +123,6 @@ class CadastroProdutos extends Component {
     }
 
     async delete(id) {
-        console.log(id);
-
         await this.setState({ id: id });
 
         await this.deleteProduto();
@@ -133,8 +131,6 @@ class CadastroProdutos extends Component {
     }
 
     async update(id) {
-        console.log(id);
-
         await this.setState({ id: id });
 
         this.buscarProdutos();
