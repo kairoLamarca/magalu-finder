@@ -11,7 +11,7 @@ class VinculoProdutoLoja extends Component {
             produtosLojasCadastrados: [],
             LojasCadastradas: [],
             codigoPesquisa: '',
-            id: '',
+            id_produto: '',
             codigo: '',
             descricao: '',
             valor: '',
@@ -23,7 +23,7 @@ class VinculoProdutoLoja extends Component {
         this.setState({ codigoPesquisa: event.target.value });
     }
 
-    handleChangeSelectLojas(event){
+    handleChangeSelectLojas(event) {
         this.setState({ filial: event.target.value });
     }
 
@@ -80,9 +80,11 @@ class VinculoProdutoLoja extends Component {
                 await this.setState({
                     vincularProduto: true,
                     codigo: response.data[0].codigo,
-                    id: response.data[0].id,
+                    id_produto: response.data[0].id + '',
                     descricao: response.data[0].descricao,
-                    valor: response.data[0].valor
+                    valor: response.data[0].valor,
+                    msgErro: '',
+                    msgSucesso: ''
                 });
             }
             else {
@@ -101,6 +103,34 @@ class VinculoProdutoLoja extends Component {
         //await this.deleteLoja();
 
         await this.buscarProdutosLojas();
+    }
+
+    vincularProduto = async () => {
+        if (this.state.filial) {
+            try {                
+                const response = await axios.post(`http://localhost:4000/admin/produtoloja/`, {
+                    id_produto: this.state.id_produto,
+                    filial: this.state.filial
+                });
+
+                await this.setState({
+                    msgErro: '',
+                    msgSucesso: response.data.mensagem,
+                    id_produto: '',
+                    filial: '',
+                    vincularProduto: false
+                });
+
+                this.buscarProdutosLojas();
+            }
+            catch (error) {
+                console.log(error)
+                this.setState({ msgErro: 'Produto já vinculado com essa loja', msgSucesso: '' });
+            }
+        }
+        else {
+            this.setState({ msgErro: 'Selecione a loja antes vincular', msgSucesso: '' });
+        }
     }
 
     renderPesquisa() {
@@ -128,6 +158,7 @@ class VinculoProdutoLoja extends Component {
                     <p>
                         <strong>Valor: </strong> {this.state.valor}
                     </p>
+                    <strong>Selecione a loja para o vínculo:</strong>
                     <select onChange={this.handleChangeSelectLojas.bind(this)} value={this.state.filial}>
                         <option value="">Selecione</option>
                         {this.state.LojasCadastradas.map(item => (
@@ -138,10 +169,6 @@ class VinculoProdutoLoja extends Component {
                 </div>
             )
         }
-    }
-
-    vincularProduto() {
-
     }
 
     renderListagem() {
