@@ -61,15 +61,12 @@ class VinculoProdutoLoja extends Component {
                 await this.setState({
                     produtosLojasCadastrados: response.data
                 });
-
-                await this.pesquisarProdutoPorCodigo();
-
             }
             else {
                 this.setState({ msgErro: 'Preencha um código', msgSucesso: '', vincularProduto: false });
             }
         } catch (error) {
-            this.setState({ msgErro: 'Nenhum produto foi encontrado', msgSucesso: '', vincularProduto: false });
+            this.setState({ msgErro: '', msgSucesso: '', vincularProduto: false });
         }
     }
 
@@ -87,6 +84,8 @@ class VinculoProdutoLoja extends Component {
                     msgErro: '',
                     msgSucesso: ''
                 });
+
+                this.pesquisarProdutoLojaPorCodigo();
             }
             else {
                 this.setState({ msgErro: 'Preencha um código', msgSucesso: '', vincularProduto: false });
@@ -150,7 +149,7 @@ class VinculoProdutoLoja extends Component {
                 <label>Código do produto</label>
                 <input type="text" id="codigo" value={this.state.codigoPesquisa} onChange={this.handleChangeCodigoPesquisa.bind(this)} name="codigo" placeholder="Código" />
 
-                <button onClick={this.pesquisarProdutoLojaPorCodigo} className="btn info">Pesquisar produto</button>
+                <button onClick={this.pesquisarProdutoPorCodigo} className="btn info">Pesquisar produto</button>
             </div>
         );
     }
