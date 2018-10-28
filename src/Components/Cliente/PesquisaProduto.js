@@ -53,6 +53,14 @@ class PesquisaProduto extends Component {
         );
     }
 
+    renderListagem() {
+        return (
+            <div>
+                <ListarProdutosLojas items={this.state.produtosEncontrados} />
+            </div>
+        )
+    }
+
     render() {
         return (
             <div>
@@ -60,9 +68,37 @@ class PesquisaProduto extends Component {
                 <div className="tela">
                     <h2>Pesquisar Produto</h2>
                     {this.renderPesquisa()}
+                    {this.renderListagem()}
                 </div>
             </div>
         )
+    }
+}
+
+class ListarProdutosLojas extends Component {
+    render() {
+        return (
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código do Produto</th>
+                        <th>Produto</th>
+                        <th>CEP</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.props.items.map(item => (
+                        <tr key={item.codigo_produto + item.loja}>
+                            <td>{item.codigo_produto}</td>
+                            <td>{item.produto}</td>
+                            <td>{item.loja}</td>
+                            <td>{item.cep}</td>                            
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        );
     }
 }
 
