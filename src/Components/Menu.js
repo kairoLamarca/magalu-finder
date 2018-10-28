@@ -17,7 +17,7 @@ class Menu extends Component {
                     <li className="dropdown">
                         <Link className="dropbtn" to="/">Cliente</Link>
                         <div className="dropdown-content">
-                            <a href="#">Pesquisar Produto</a>
+                            <Link to="/PesquisaProduto">Pesquisar Produto</Link>
                         </div>
                     </li>
                     <li><Link to="/">Sobre</Link></li>

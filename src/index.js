@@ -6,6 +6,7 @@ import App from './App';
 import CadastroLojas from './Components/Admin/CadastroLojas';
 import CadastroProdutos from './Components/Admin/CadastroProdutos';
 import VinculoProdutoLoja from './Components/Admin/VinculoProdutoLoja';
+import PesquisaProduto from './Components/Cliente/PesquisaProduto';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
@@ -16,6 +17,7 @@ ReactDOM.render(
             <Route path="/CadastroLojas" exact={true} component={CadastroLojas} />
             <Route path="/CadastroProdutos" exact={true} component={CadastroProdutos} />
             <Route path="/VinculoProdutoLoja" exact={true} component={VinculoProdutoLoja} />
+            <Route path="/PesquisaProduto" exact={true} component={PesquisaProduto} />
         </Switch>
     </BrowserRouter>, document.getElementById('root'));
 
