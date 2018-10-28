@@ -15,7 +15,8 @@ class VinculoProdutoLoja extends Component {
             codigo: '',
             descricao: '',
             valor: '',
-            filial: ''
+            filial: '',
+            id_vinculo: ''
         }
     }
 
@@ -95,14 +96,24 @@ class VinculoProdutoLoja extends Component {
         }
     }
 
-    async delete(filial) {
-        console.log(filial);
+    async delete(id_vinculo) {
+        console.log(id_vinculo);
 
-        await this.setState({ filial: filial });
+        await this.setState({ id_vinculo: id_vinculo });
 
-        //await this.deleteLoja();
+        await this.deleteVinculo();
 
         await this.buscarProdutosLojas();
+    }
+
+    deleteVinculo = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:4000/admin/produtoloja/${this.state.id_vinculo}`);
+
+            this.setState({ msgErro: '', msgSucesso: response.data.mensagem, id_vinculo: '' });
+        } catch (error) {
+            this.setState({ msgErro: 'Não foi possível excluir o vínculo', msgSucesso: '' });
+        }
     }
 
     vincularProduto = async () => {
@@ -213,8 +224,8 @@ class VinculoProdutoLoja extends Component {
 
 class ListarProdutosLojas extends Component {
 
-    _handleDelete(filial) {
-        this.props._handleDelete(filial);
+    _handleDelete(id_vinculo) {
+        this.props._handleDelete(id_vinculo);
     }
 
     render() {
