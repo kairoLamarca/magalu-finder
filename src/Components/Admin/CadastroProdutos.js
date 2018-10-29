@@ -29,7 +29,7 @@ class CadastroProdutos extends Component {
 
     handleChangeValor(event) {
         this.setState({ valor: event.target.value });
-        console.log('teste', this.state.valor.replace('.', '').replace('.', '').replace('.', '').replace(',', '.'))
+        console.log('teste', this.state.valor.replace(/\./g, '').replace(',', '.'))
     }
 
     novoProduto() {
@@ -73,7 +73,7 @@ class CadastroProdutos extends Component {
             const response = await axios.post(`http://localhost:4000/admin/produto/`, {
                 codigo: this.state.codigo,
                 descricao: this.state.descricao,
-                valor: this.state.valor.replace('.', '').replace('.', '').replace('.', '').replace(',', '.')
+                valor: this.state.valor.replace(/\./g, '').replace(',', '.')
             });
 
             await this.setState({
@@ -96,7 +96,7 @@ class CadastroProdutos extends Component {
             const response = await axios.put(`http://localhost:4000/admin/produto/${this.state.id}`, {
                 codigo: this.state.codigo,
                 descricao: this.state.descricao,
-                valor: this.state.valor.replace('.', '').replace('.', '').replace('.', '').replace(',', '.')
+                valor: this.state.valor.replace(/\./g, '').replace(',', '.')
             });
 
             await this.setState({
