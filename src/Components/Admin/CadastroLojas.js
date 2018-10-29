@@ -16,7 +16,8 @@ class CadastroLojas extends Component {
             estado: '',
             endereco: '',
             bairro: '',
-            numero: ''
+            numero: '',
+            alterarLoja: false
         }
     }
 
@@ -66,6 +67,28 @@ class CadastroLojas extends Component {
         }
     }
 
+    buscarLojaAlterar = async () => {
+        try {
+            const response = await axios.get(`http://localhost:4000/admin/loja/${this.state.filial}`);
+
+            await this.setState(
+                {
+                    alterarLoja: true,
+                    descricao: response.data[0].descricao,
+                    cep: response.data[0].cep,
+                    cidade: response.data[0].cidade,
+                    estado: response.data[0].estado,
+                    endereco: response.data[0].endereco,
+                    bairro: response.data[0].bairro,
+                    numero: response.data[0].numero
+                }
+            );
+
+        } catch (error) {
+            await this.setState({ lojasCadastradas: [] });
+        }
+    }
+
     deleteLoja = async () => {
         try {
             const response = await axios.delete(`http://localhost:4000/admin/loja/${this.state.filial}`);
@@ -109,8 +132,45 @@ class CadastroLojas extends Component {
         }
     }
 
+    alterarLoja = async () => {
+        const response = await axios.put(`http://localhost:4000/admin/loja/${this.state.filial}`, {
+            descricao: this.state.descricao,
+            cep: this.state.cep,
+            cidade: this.state.cidade,
+            estado: this.state.estado,
+            endereco: this.state.endereco,
+            bairro: this.state.bairro,
+            numero: this.state.numero
+        });
+
+        await this.setState({
+            msgErro: '',
+            msgSucesso: response.data.mensagem,
+            alterarLoja: false,
+            filial: '',
+            descricao: '',
+            cep: '',
+            cidade: '',
+            estado: '',
+            endereco: '',
+            bairro: '',
+            numero: ''
+        });
+
+        await this.buscarLojas();
+    }
+
+    gravar() {
+        if (this.state.alterarLoja) {
+            this.alterarLoja();
+        }
+        else {
+            this.gravarLoja();
+        }
+    }
+
     novaLoja() {
-        this.setState({ novaLoja: true });
+        this.setState({ novaLoja: true, alterarLoja: false });
     }
 
     renderMensagens() {
@@ -129,13 +189,26 @@ class CadastroLojas extends Component {
         }
     }
 
+    renderFilial() {
+        if (this.state.alterarLoja) {
+            return (
+                <input disabled type="text" id="filial" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
+            )
+        }
+        else {
+            return (
+                <input type="text" id="filial" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
+            )
+        }
+    }
+
     renderCadastro() {
-        if (this.state.novaLoja) {
+        if (this.state.novaLoja || this.state.alterarLoja) {
             return (
                 <div className="container">
                     {/* <form> */}
                     <label>Filial</label>
-                    <input type="text" id="filial" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
+                    {this.renderFilial()}
 
                     <label>Descrição</label>
                     <input type="text" id="descricao" value={this.state.descricao} onChange={this.handleChangeDescricao.bind(this)} name="descricao" placeholder="Descrição" />
@@ -187,7 +260,7 @@ class CadastroLojas extends Component {
                     <label>Número</label>
                     <input type="text" id="numero" value={this.state.numero} onChange={this.handleChangeNumero.bind(this)} name="numero" placeholder="Número" />
 
-                    <button onClick={this.gravarLoja} className="btn success">Gravar</button>
+                    <button onClick={this.gravar.bind(this)} className="btn success">Gravar</button>
                     {/* </form> */}
                 </div>
             );
@@ -202,8 +275,8 @@ class CadastroLojas extends Component {
         }
     }
 
-    async delete(filial) {    
-        await this.setState({ filial: filial });
+    async delete(filial) {
+        await this.setState({ filial: filial, alterarLoja: true });
 
         await this.deleteLoja();
 
@@ -211,9 +284,9 @@ class CadastroLojas extends Component {
     }
 
     async update(filial) {
-        await this.setState({ filial: filial });
+        await this.setState({ filial: filial, msgErro: '', msgSucesso: '' });
 
-        this.buscarLojas();
+        await this.buscarLojaAlterar();
     }
 
     render() {
