@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Menu from '../Menu';
 import axios from 'axios';
+import InputMask from 'react-input-mask';
+import CurrencyInput from 'react-currency-input';
 
 class CadastroProdutos extends Component {
     constructor(props) {
@@ -27,6 +29,7 @@ class CadastroProdutos extends Component {
 
     handleChangeValor(event) {
         this.setState({ valor: event.target.value });
+        console.log(event.target.value)
     }
 
     novoProduto() {
@@ -141,7 +144,8 @@ class CadastroProdutos extends Component {
                     <input type="text" id="descricao" value={this.state.descricao} onChange={this.handleChangeDescricao.bind(this)} name="descricao" placeholder="Descrição" />
 
                     <label>Valor</label>
-                    <input type="text" id="valor" value={this.state.valor} onChange={this.handleChangeValor.bind(this)} name="valor" placeholder="Valor" />
+                    {/* <input type="text" id="valor" value={this.state.valor} onChange={this.handleChangeValor.bind(this)} name="valor" placeholder="Valor" /> */}
+                    <CurrencyInput type="text" id="valor" mask="999.999,99" value={this.state.valor} onChangeEvent={this.handleChangeValor.bind(this)} name="valor" placeholder="Valor" decimalSeparator="," thousandSeparator="." />
 
                     <button onClick={this.gravar.bind(this)} className="btn success">Gravar</button>
                 </div>
