@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Menu from '../Menu';
 import axios from 'axios';
-import InputMask from 'react-input-mask';
 import CurrencyInput from 'react-currency-input';
 
 class CadastroProdutos extends Component {
@@ -231,8 +230,8 @@ class ListarProdutos extends Component {
                     {this.props.items.map(item => (
                         <tr key={item.id}>
                             <td>{item.codigo}</td>
-                            <td>{item.valor}</td>
                             <td>{item.descricao}</td>
+                            <td>{item.valor}</td>
                             <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.id, item.codigo)}>Alterar</button></td>
                             <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.id)}>Excluir</button></td>
                         </tr>
