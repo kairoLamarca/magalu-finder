@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './public/magalu-finder.css';
+import './Public/magalu-finder.css';
 import App from './App';
 import CadastroLojas from './Components/Admin/CadastroLojas';
 import CadastroProdutos from './Components/Admin/CadastroProdutos';

@@ -204,7 +204,7 @@ class CadastroLojas extends Component {
 
     renderCadastro() {
         if (this.state.novaLoja || this.state.alterarLoja) {
-            return (
+            return (                
                 <div className="container">
                     {/* <form> */}
                     <label>Filial</label>
@@ -276,7 +276,7 @@ class CadastroLojas extends Component {
     }
 
     async delete(filial) {
-        await this.setState({ filial: filial, alterarLoja: true });
+        await this.setState({ filial: filial });
 
         await this.deleteLoja();
 

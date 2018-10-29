@@ -91,6 +91,7 @@ div.container {
     padding: 14px 28px;
     font-size: 16px;
     cursor: pointer;
+    border-radius: 7px;
 }
 
 .success {background-color: #4CAF50;}
@@ -133,6 +134,7 @@ tr:nth-child(even) {
     padding: 10px 15px;
     font-size: 16px;
     cursor: pointer;
+    border-radius: 7px;
 }
 
 .alert {
