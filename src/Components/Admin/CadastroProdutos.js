@@ -12,7 +12,8 @@ class CadastroProdutos extends Component {
             id: '',
             codigo: '',
             descricao: '',
-            valor: ''
+            valor: '',
+            alterarProduto: false
         }
     }
 
@@ -29,7 +30,7 @@ class CadastroProdutos extends Component {
     }
 
     novoProduto() {
-        this.setState({ novoProduto: true });
+        this.setState({ novoProduto: true, msgErro: '', msgSucesso: '' });
     }
 
     componentDidMount() {
@@ -42,7 +43,25 @@ class CadastroProdutos extends Component {
 
             await this.setState({ produtosCadastrados: response.data });
         } catch (error) {
-            await this.setState({ produtosCadastrados: []});
+            await this.setState({ produtosCadastrados: [] });
+        }
+    }
+
+    buscarProdutoAlterar = async () => {
+        try {
+            const response = await axios.get(`http://localhost:4000/admin/produto/${this.state.codigo}`);
+
+            await this.setState(
+                {
+                    alterarProduto: true,
+                    codigo: response.data[0].codigo,
+                    descricao: response.data[0].descricao,
+                    valor: response.data[0].valor
+                }
+            );
+
+        } catch (error) {
+            await this.setState({ produtosCadastrados: [] });
         }
     }
 
@@ -69,6 +88,38 @@ class CadastroProdutos extends Component {
         }
     }
 
+    alterarProduto = async () => {
+        try {
+            const response = await axios.put(`http://localhost:4000/admin/produto/${this.state.id}`, {
+                codigo: this.state.codigo,
+                descricao: this.state.descricao,
+                valor: this.state.valor
+            });
+
+            await this.setState({
+                msgErro: '',
+                msgSucesso: response.data.mensagem,
+                alterarProduto: false,
+                codigo: '',
+                descricao: '',
+                valor: ''
+            });
+
+            await this.buscarProdutos();
+        } catch (error) {
+            this.setState({ msgErro: 'Não foi possível cadastrar o produto', msgSucesso: '' });
+        }
+    }
+
+    gravar() {
+        if (this.state.alterarProduto) {
+            this.alterarProduto();
+        }
+        else {
+            this.gravarProduto();
+        }
+    }
+
     deleteProduto = async () => {
         try {
             const response = await axios.delete(`http://localhost:4000/admin/produto/${this.state.id}`);
@@ -80,7 +131,7 @@ class CadastroProdutos extends Component {
     }
 
     renderCadastro() {
-        if (this.state.novoProduto) {
+        if (this.state.novoProduto || this.state.alterarProduto) {
             return (
                 <div className="container">
                     <label>Código</label>
@@ -92,7 +143,7 @@ class CadastroProdutos extends Component {
                     <label>Valor</label>
                     <input type="text" id="valor" value={this.state.valor} onChange={this.handleChangeValor.bind(this)} name="valor" placeholder="Valor" />
 
-                    <button onClick={this.gravarProduto} className="btn success">Gravar</button>
+                    <button onClick={this.gravar.bind(this)} className="btn success">Gravar</button>
                 </div>
             );
         }
@@ -130,10 +181,10 @@ class CadastroProdutos extends Component {
         await this.buscarProdutos();
     }
 
-    async update(id) {
-        await this.setState({ id: id });
+    async update(id, codigo) {
+        await this.setState({ id: id, codigo: codigo, msgErro: '', msgSucesso: '' });
 
-        this.buscarProdutos();
+        await this.buscarProdutoAlterar();
     }
 
     render() {
@@ -156,8 +207,8 @@ class ListarProdutos extends Component {
         this.props._handleDelete(id);
     }
 
-    _handleUpdate(id) {
-        this.props._handleUpdate(id);
+    _handleUpdate(id, codigo) {
+        this.props._handleUpdate(id, codigo);
     }
 
     render() {
@@ -178,7 +229,7 @@ class ListarProdutos extends Component {
                             <td>{item.codigo}</td>
                             <td>{item.valor}</td>
                             <td>{item.descricao}</td>
-                            <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.id)}>Alterar</button></td>
+                            <td><button className="btnTable info" onClick={this._handleUpdate.bind(this, item.id, item.codigo)}>Alterar</button></td>
                             <td><button className="btnTable danger" onClick={this._handleDelete.bind(this, item.id)}>Excluir</button></td>
                         </tr>
                     ))}
