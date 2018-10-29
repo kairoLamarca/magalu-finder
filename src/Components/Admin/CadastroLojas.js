@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Menu from '../Menu';
 import axios from 'axios';
+import InputMask from 'react-input-mask';
 
 class CadastroLojas extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class CadastroLojas extends Component {
     }
 
     handleChangeFilial(event) {
-        this.setState({ filial: event.target.value });
+        this.setState({ filial: event.target.value.replace(/_/g, '') });        
     }
 
     handleChangeDescricao(event) {
@@ -30,7 +31,7 @@ class CadastroLojas extends Component {
     }
 
     handleChangeCep(event) {
-        this.setState({ cep: event.target.value });
+        this.setState({ cep: event.target.value.replace('-', '').replace(/_/g, '') });
     }
 
     handleChangeCidade(event) {
@@ -101,6 +102,7 @@ class CadastroLojas extends Component {
 
     gravarLoja = async () => {
         try {
+            console.log(this.state.cep);
             const response = await axios.post(`http://localhost:4000/admin/loja/`, {
                 filial: this.state.filial,
                 descricao: this.state.descricao,
@@ -170,7 +172,7 @@ class CadastroLojas extends Component {
     }
 
     novaLoja() {
-        this.setState({ novaLoja: true, alterarLoja: false });
+        this.setState({ novaLoja: true, alterarLoja: false, msgErro: '', msgSucesso: '' });
     }
 
     renderMensagens() {
@@ -197,14 +199,15 @@ class CadastroLojas extends Component {
         }
         else {
             return (
-                <input type="text" id="filial" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
+                <InputMask type="text" id="filial" mask="9999" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
+                // <input type="text" id="filial" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
             )
         }
     }
 
     renderCadastro() {
         if (this.state.novaLoja || this.state.alterarLoja) {
-            return (                
+            return (
                 <div className="container">
                     {/* <form> */}
                     <label>Filial</label>
@@ -214,7 +217,8 @@ class CadastroLojas extends Component {
                     <input type="text" id="descricao" value={this.state.descricao} onChange={this.handleChangeDescricao.bind(this)} name="descricao" placeholder="Descrição" />
 
                     <label>CEP</label>
-                    <input type="text" id="cep" value={this.state.cep} onChange={this.handleChangeCep.bind(this)} name="cep" placeholder="CEP" />
+                    {/* <input type="text" id="cep" value={this.state.cep} onChange={this.handleChangeCep.bind(this)} name="cep" placeholder="CEP" /> */}
+                    <InputMask type="text" id="cep" mask="99999-999" value={this.state.cep} onChange={this.handleChangeCep.bind(this)} name="cep" placeholder="CEP" />
 
                     <label>Cidade</label>
                     <input type="text" id="cidade" value={this.state.cidade} onChange={this.handleChangeCidade.bind(this)} name="cidade" placeholder="Cidade" />
