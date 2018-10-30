@@ -57,6 +57,16 @@ A API deverá estar rodando em [http://localhost:4000]
 #### Cadastro de Lojas
 ![tela](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_cadastro_lojas.png)
 
+Ao clicar no botão **Nova Loja** abre o formulário para preencher os dados
+![novaLoja](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_cadastro_lojas_novaloja.png)
+
+Clique no botão **Gravar** para salvar os dados informados
+![gravar](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_cadastro_lojas_gravar.png)
+
+Os botões **Excluir** e **Alterar** existem para cada resgistro da tabela
+Ao clicar em **Excluir**, apaga o registro respectivo à linha da tabela
+Ao clicar em **Alterar**, abre a tela de cadastro com os dados respectivo à linha da tabela 
+
 ### Administrativo > CadastroProdutos
 #### Cadastro de Produtos
 
