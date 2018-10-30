@@ -48,3 +48,5 @@ Para executar a aplicação localmente, execute os seguintes comandos na pasta d
 > npm start
 ```
 A aplicação estará rodando em [http://localhost:3000]
+
+A API deverá estar rodando em [http://localhost:4000]

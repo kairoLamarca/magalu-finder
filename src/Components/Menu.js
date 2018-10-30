@@ -20,7 +20,6 @@ class Menu extends Component {
                             <Link to="/PesquisaProduto">Pesquisar Produto</Link>
                         </div>
                     </li>
-                    <li><Link to="/">Sobre</Link></li>
                 </ul>
             </div>
         );
