@@ -69,6 +69,16 @@ Ao clicar em **Alterar**, abre a tela de cadastro com os dados respectivo à lin
 
 ### Administrativo > CadastroProdutos
 #### Cadastro de Produtos
+![tela](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_cadastro_produtos.png)
+
+Ao clicar no botão **Novp Produto** abre o formulário para preencher os dados
+![novoProduto](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_cadastro_produtos_novoproduto.png)
+
+Clique no botão **Gravar** para salvar os dados informados
+
+Os botões **Excluir** e **Alterar** existem para cada resgistro da tabela
+Ao clicar em **Excluir**, apaga o registro respectivo à linha da tabela
+Ao clicar em **Alterar**, abre a tela de cadastro com os dados respectivo à linha da tabela 
 
 ### Administrativo > VinculoProdutoLoja
 #### Vincular produtos com lojas
