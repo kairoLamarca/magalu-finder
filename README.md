@@ -55,7 +55,7 @@ A API deverá estar rodando em [http://localhost:4000]
 
 ### Administrativo > CadastroLojas
 #### Cadastro de Lojas
-![tela](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_cadastro_lojas.jpg)
+![tela](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_cadastro_lojas.png)
 
 ### Administrativo > CadastroProdutos
 #### Cadastro de Produtos
