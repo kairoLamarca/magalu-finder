@@ -116,6 +116,7 @@ class ListarProdutosLojas extends Component {
                     <tr>
                         <th>Código do Produto</th>
                         <th>Produto</th>
+                        <th>Valor</th>
                         <th>Distância</th>
                         <th>Descrição</th>
                         <th>CEP</th>
@@ -126,6 +127,7 @@ class ListarProdutosLojas extends Component {
                         <tr key={item.codigo_produto + item.loja}>
                             <td>{item.codigo_produto}</td>
                             <td>{item.produto}</td>
+                            <td>{item.valor}</td>
                             <td>{item.distancia}</td>
                             <td>{item.loja}</td>
                             <td>{item.cep}</td>
