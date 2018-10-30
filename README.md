@@ -63,9 +63,9 @@ Ao clicar no botão **Nova Loja** abre o formulário para preencher os dados
 Clique no botão **Gravar** para salvar os dados informados
 ![gravar](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_cadastro_lojas_gravar.png)
 
-Os botões **Excluir** e **Alterar** existem para cada resgistro da tabela
-Ao clicar em **Excluir**, apaga o registro respectivo à linha da tabela
-Ao clicar em **Alterar**, abre a tela de cadastro com os dados respectivo à linha da tabela 
+Os botões **Excluir** e **Alterar** existem para cada resgistro da tabela.
+Ao clicar em **Excluir**, apaga o registro respectivo à linha da tabela.
+Ao clicar em **Alterar**, abre a tela de cadastro com os dados respectivo à linha da tabela. 
 
 ### Administrativo > CadastroProdutos
 #### Cadastro de Produtos
@@ -76,9 +76,9 @@ Ao clicar no botão **Novo Produto** abre o formulário para preencher os dados
 
 Clique no botão **Gravar** para salvar os dados informados
 
-Os botões **Excluir** e **Alterar** existem para cada resgistro da tabela
-Ao clicar em **Excluir**, apaga o registro respectivo à linha da tabela
-Ao clicar em **Alterar**, abre a tela de cadastro com os dados respectivo à linha da tabela 
+Os botões **Excluir** e **Alterar** existem para cada resgistro da tabela.
+Ao clicar em **Excluir**, apaga o registro respectivo à linha da tabela.
+Ao clicar em **Alterar**, abre a tela de cadastro com os dados respectivo à linha da tabela.
 
 ### Administrativo > VinculoProdutoLoja
 #### Vincular produtos com lojas
@@ -86,9 +86,9 @@ Ao clicar em **Alterar**, abre a tela de cadastro com os dados respectivo à lin
 Ao clicar em **Pesquisar produto**, será pesquisado produto de acordo com o código informado, para em seguida aparecer a tela de vínculo preenchida
 
 ![vincular](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_vinculo_vincular.png)
-Após selecionar a loja que será vinculada, clique em **Vincular produto** e será criado um novo vínculo
+Após selecionar a loja que será vinculada, clique em **Vincular produto** e será criado um novo vínculo.
 
-O botão **Excluir** existe para cada resgistro da tabela e ao clicar nele, apaga o registro respectivo à linha da tabela
+O botão **Excluir** existe para cada resgistro da tabela e ao clicar nele, apaga o registro respectivo à linha da tabela.
 
 ### Cliente > PesquisaProduto
 #### Pesquisar Produto
@@ -97,4 +97,4 @@ Informe um **código de produto** ou  uma **descrição** e um **CEP** e clique 
 
 ![resultado](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/cliente_pesquisar_resultado.png)
 
-Após clicar em **Pesquisar produto**, será listado os produtos encontrados com a distância da loja onde tem o produto até o CEP que foi informado
+Após clicar em **Pesquisar produto**, será listado os produtos encontrados com a distância da loja onde tem o produto até o CEP que foi informado.
