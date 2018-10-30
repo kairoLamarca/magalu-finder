@@ -71,7 +71,7 @@ Ao clicar em **Alterar**, abre a tela de cadastro com os dados respectivo à lin
 #### Cadastro de Produtos
 ![tela](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_cadastro_produtos.png)
 
-Ao clicar no botão **Novp Produto** abre o formulário para preencher os dados
+Ao clicar no botão **Novo Produto** abre o formulário para preencher os dados
 ![novoProduto](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_cadastro_produtos_novoproduto.png)
 
 Clique no botão **Gravar** para salvar os dados informados
@@ -82,6 +82,13 @@ Ao clicar em **Alterar**, abre a tela de cadastro com os dados respectivo à lin
 
 ### Administrativo > VinculoProdutoLoja
 #### Vincular produtos com lojas
+![tela](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_vinculo.png)
+Ao clicar em **Pesquisar produto**, será pesquisado produto de acordo com o código informado, para em seguida aparecer a tela de vínculo preenchida
+
+![vincular](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_vinculo_vincular.png)
+Após slecionar a loja que será vinculada, clique em **Vincular produto** e será criado um novo vínculo
+
+O botão **Excluir** existe para cada resgistro da tabela e ao clicar nele, apaga o registro respectivo à linha da tabela
 
 ### Cliente > PesquisaProduto
 #### Pesquisar Produto
