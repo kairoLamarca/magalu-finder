@@ -200,7 +200,6 @@ class CadastroLojas extends Component {
         else {
             return (
                 <InputMask type="text" id="filial" mask="9999" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
-                // <input type="text" id="filial" value={this.state.filial} onChange={this.handleChangeFilial.bind(this)} name="filial" placeholder="Filial" />
             )
         }
     }
@@ -209,7 +208,6 @@ class CadastroLojas extends Component {
         if (this.state.novaLoja || this.state.alterarLoja) {
             return (
                 <div className="container">
-                    {/* <form> */}
                     <label>Filial</label>
                     {this.renderFilial()}
 
@@ -217,7 +215,6 @@ class CadastroLojas extends Component {
                     <input type="text" id="descricao" value={this.state.descricao} onChange={this.handleChangeDescricao.bind(this)} name="descricao" placeholder="Descrição" />
 
                     <label>CEP</label>
-                    {/* <input type="text" id="cep" value={this.state.cep} onChange={this.handleChangeCep.bind(this)} name="cep" placeholder="CEP" /> */}
                     <InputMask type="text" id="cep" mask="99999-999" value={this.state.cep} onChange={this.handleChangeCep.bind(this)} name="cep" placeholder="CEP" />
 
                     <label>Cidade</label>
@@ -265,7 +262,6 @@ class CadastroLojas extends Component {
                     <input type="text" id="numero" value={this.state.numero} onChange={this.handleChangeNumero.bind(this)} name="numero" placeholder="Número" />
 
                     <button onClick={this.gravar.bind(this)} className="btn success">Gravar</button>
-                    {/* </form> */}
                 </div>
             );
         }

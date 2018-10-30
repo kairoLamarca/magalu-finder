@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Menu from '../Menu';
 import axios from 'axios';
+import InputMask from 'react-input-mask';
 
 class PesquisaProduto extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ class PesquisaProduto extends Component {
     }
 
     handleChangeCep(event) {
-        this.setState({ cep: event.target.value });
+        this.setState({ cep: event.target.value.replace('-', '').replace(/_/g, '') });
     }
 
     pesquisarProduto = async () => {
@@ -61,7 +62,7 @@ class PesquisaProduto extends Component {
                 <input type="text" id="descricao" value={this.state.descricao} onChange={this.handleChangeDescricao.bind(this)} name="descricao" placeholder="Descrição" />
 
                 <label>CEP</label>
-                <input type="text" id="cep" value={this.state.cep} onChange={this.handleChangeCep.bind(this)} name="cep" placeholder="CEP" />
+                <InputMask type="text" id="cep" mask="99999-999" value={this.state.cep} onChange={this.handleChangeCep.bind(this)} name="cep" placeholder="CEP" />
 
                 <button onClick={this.pesquisarProduto} className="btn info">Pesquisar produto</button>
             </div>
