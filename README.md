@@ -50,3 +50,18 @@ Para executar a aplicação localmente, execute os seguintes comandos na pasta d
 A aplicação estará rodando em [http://localhost:3000]
 
 A API deverá estar rodando em [http://localhost:4000]
+
+## Telas
+
+### Administrativo > CadastroLojas
+#### Cadastro de Lojas
+![tela](https://raw.githubusercontent.com/kairoLamarca/magalu-finder/master/public/screenshots/adm_cadastro_lojas.jpg)
+
+### Administrativo > CadastroProdutos
+#### Cadastro de Produtos
+
+### Administrativo > VinculoProdutoLoja
+#### Vincular produtos com lojas
+
+### Cliente > PesquisaProduto
+#### Pesquisar Produto
